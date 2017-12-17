@@ -27,19 +27,19 @@ class Grid extends React.Component {
 	render() {
 		const width = (this.props.cols * 52) + 1;
 
-		var rowsArr = [];
-		var boxClass = "";
+		var boxArr = [];
+		var gridBoxClass = "";
 
 		for (var i = 0; i < this.props.rows; i++) {
 			for (var j = 0; j < this.props.cols; j++) {
-				let boxId = i + "_" + j;
+				let gridBoxId = i + "_" + j;
 
-				boxClass = this.props.gridFull[i][j] ? "box on" : "box off";
-				rowsArr.push(
+				gridBoxClass = this.props.gridFull[i][j] ? "box on" : "box off";
+				boxArr.push(
 					<Box
-						boxClass={boxClass}
-						key={boxId}
-						boxId={boxId}
+						boxClass={gridBoxClass}
+						key={gridBoxId}
+						boxId={gridBoxId}
 						row={i}
 						col={j}
 						selectBox={this.props.selectBox}
@@ -49,7 +49,7 @@ class Grid extends React.Component {
 		}
 		return(
 			<div className="grid" style={{ width: width}}> 
-				{rowsArr}
+				{boxArr}
 			</div>
 
 		)
@@ -82,7 +82,7 @@ class Main extends React.Component {
 		}) 
 	}
 
-	seed = () => {
+	populate = () => {
 		
 		let gridCopy = arrayClone(this.state.gridFull);
 		for (let i = 0; i < this.rows; i++) {
@@ -104,7 +104,7 @@ class Main extends React.Component {
 
 
 	componentDidMount(){
-		this.seed();
+		this.populate();
 
 	}
 
@@ -128,6 +128,7 @@ class Main extends React.Component {
 	}
 }
 
+
 function arrayClone(arr) {
 	return JSON.parse(JSON.stringify(arr));
 }
@@ -135,9 +136,5 @@ function arrayClone(arr) {
 function alertPrompt($altprompt) {
 	return prompt($altprompt);
 }
-
-function showAlert($shwalert) {
-	return alert($shwalert);
-} 
 
 ReactDOM.render(<Main /> , document.getElementById('root'));
